@@ -1,11 +1,18 @@
 import '../styles/App.css';
-// import callToApi from '../services/api';
-import quotes from '../data/quotes.json';
+import { useState } from 'react';
+import quotesFriends from '../data/quotes.json';
 
 function App() {
-  const renderQuotes = () => {
-    return <li></li>;
-  };
+  const [quotes, setQuotes] = useState(quotesFriends);
+
+  const renderQuotes = quotes.map((quote, index) => {
+    return (
+      <li key={index}>
+        {quote.quote}
+        {quote.character}
+      </li>
+    );
+  });
 
   return (
     <div className="App">
@@ -22,7 +29,7 @@ function App() {
       </header>
       <main>
         <section>
-          <ul></ul>
+          <ul>{renderQuotes}</ul>
         </section>
         <section>
           <h3>Añadir una nueva frase</h3>
