@@ -27,7 +27,8 @@ function App() {
           quote.quote
             .toLowerCase()
             .includes(filteredQuotes.quoteFilter.toLowerCase()) &&
-          quote.character === filteredQuotes.characterFilter
+          quote.character.toLowerCase() ===
+            filteredQuotes.characterFilter.toLowerCase()
         );
       }
     })
