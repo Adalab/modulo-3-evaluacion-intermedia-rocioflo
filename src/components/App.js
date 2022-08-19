@@ -6,20 +6,35 @@ function App() {
   //Variables de estado
   const [quotes, setQuotes] = useState(quotesFriends);
   const [newQuote, setNewQuote] = useState({
-    quote: '',
-    character: '',
+    quoteInput: '',
+    characterInput: '',
+  });
+  const [filteredQuotes, setFilteredQuotes] = useState({
+    quoteFilter: '',
+    characterFilter: 'all',
   });
 
-  //Pintado de frases
-  const renderQuotes = quotes.map((quote, index) => {
-    return (
-      <li key={index}>
-        {quote.quote} - {quote.character}
-      </li>
-    );
-  });
+  //Pintado y filtrado de frases
+  const renderQuotes = quotes
+    .filter((quote) => {
+      return quote.quote
+        .toLowerCase()
+        .includes(filteredQuotes.quoteFilter.toLowerCase());
+    })
 
-  //Recoger info de los inputs
+    .map((quote, index) => {
+      return (
+        <li key={index}>
+          {quote.quote} - {quote.character}
+        </li>
+      );
+    });
+
+  const handleFilter = (ev) => {
+    setFilteredQuotes({ ...filteredQuotes, [ev.target.id]: ev.target.value });
+  };
+
+  //Recogida de info de los inputs
 
   const handleInput = (ev) => {
     setNewQuote({ ...newQuote, [ev.target.id]: ev.target.value });
@@ -29,22 +44,39 @@ function App() {
     ev.preventDefault();
     setQuotes([...quotes, newQuote]);
     setNewQuote({
-      quote: '',
-      character: '',
+      quoteInput: '',
+      characterInput: '',
     });
   };
 
   return (
     <div className="App">
       <header>
-        <h1>Frases de Friends</h1>
+        <h1>So no one told you life was gonna be this way 👏👏👏👏</h1>
         <label>
           Filtrar por frase
-          <input type="text"></input>
+          <input
+            type="text"
+            id="quoteFilter"
+            onChange={handleFilter}
+            value={filteredQuotes.quote}
+          ></input>
         </label>
         <label>
           Filtrar por personaje
-          <input type="select"></input>
+          <select
+            id="characterFilter"
+            value={filteredQuotes.character}
+            onChange={handleFilter}
+          >
+            <option value="all">Todos</option>
+            <option value="Ross">Ross</option>
+            <option>Monica</option>
+            <option>Joey</option>
+            <option>Phoebe</option>
+            <option>Chandler</option>
+            <option>Rachel</option>
+          </select>
         </label>
       </header>
       <main>
@@ -59,7 +91,7 @@ function App() {
               <input
                 type="text"
                 onChange={handleInput}
-                id="quote"
+                id="quoteInput"
                 value={newQuote.quote}
               ></input>
             </label>
@@ -68,7 +100,7 @@ function App() {
               <input
                 type="text"
                 onChange={handleInput}
-                id="character"
+                id="characterInput"
                 value={newQuote.character}
               ></input>
             </label>
