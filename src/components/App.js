@@ -6,8 +6,8 @@ function App() {
   //Variables de estado
   const [quotes, setQuotes] = useState(quotesFriends);
   const [newQuote, setNewQuote] = useState({
-    quoteInput: '',
-    characterInput: '',
+    quote: '',
+    character: '',
   });
   const [filteredQuotes, setFilteredQuotes] = useState({
     quoteFilter: '',
@@ -16,10 +16,20 @@ function App() {
 
   //Pintado y filtrado de frases
   const renderQuotes = quotes
+
     .filter((quote) => {
-      return quote.quote
-        .toLowerCase()
-        .includes(filteredQuotes.quoteFilter.toLowerCase());
+      if (filteredQuotes.characterFilter === 'all') {
+        return quote.quote
+          .toLowerCase()
+          .includes(filteredQuotes.quoteFilter.toLowerCase());
+      } else {
+        return (
+          quote.quote
+            .toLowerCase()
+            .includes(filteredQuotes.quoteFilter.toLowerCase()) &&
+          quote.character === filteredQuotes.characterFilter
+        );
+      }
     })
 
     .map((quote, index) => {
@@ -44,8 +54,8 @@ function App() {
     ev.preventDefault();
     setQuotes([...quotes, newQuote]);
     setNewQuote({
-      quoteInput: '',
-      characterInput: '',
+      quote: '',
+      character: '',
     });
   };
 
@@ -59,23 +69,23 @@ function App() {
             type="text"
             id="quoteFilter"
             onChange={handleFilter}
-            value={filteredQuotes.quote}
+            value={filteredQuotes.quoteFilter}
           ></input>
         </label>
         <label>
           Filtrar por personaje
           <select
             id="characterFilter"
-            value={filteredQuotes.character}
+            value={filteredQuotes.characterFilter}
             onChange={handleFilter}
           >
             <option value="all">Todos</option>
             <option value="Ross">Ross</option>
-            <option>Monica</option>
-            <option>Joey</option>
-            <option>Phoebe</option>
-            <option>Chandler</option>
-            <option>Rachel</option>
+            <option value="Monica">Monica</option>
+            <option value="Joey">Joey</option>
+            <option value="Phoebe">Phoebe</option>
+            <option value="Chandler">Chandler</option>
+            <option value="Rachel">Rachel</option>
           </select>
         </label>
       </header>
@@ -91,7 +101,7 @@ function App() {
               <input
                 type="text"
                 onChange={handleInput}
-                id="quoteInput"
+                id="quote"
                 value={newQuote.quote}
               ></input>
             </label>
@@ -100,7 +110,7 @@ function App() {
               <input
                 type="text"
                 onChange={handleInput}
-                id="characterInput"
+                id="character"
                 value={newQuote.character}
               ></input>
             </label>
