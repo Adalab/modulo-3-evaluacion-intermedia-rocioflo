@@ -3,16 +3,36 @@ import { useState } from 'react';
 import quotesFriends from '../data/quotes.json';
 
 function App() {
+  //Variables de estado
   const [quotes, setQuotes] = useState(quotesFriends);
+  const [newQuote, setNewQuote] = useState({
+    quote: '',
+    character: '',
+  });
 
+  //Pintado de frases
   const renderQuotes = quotes.map((quote, index) => {
     return (
       <li key={index}>
-        {quote.quote}
-        {quote.character}
+        {quote.quote} - {quote.character}
       </li>
     );
   });
+
+  //Recoger info de los inputs
+
+  const handleInput = (ev) => {
+    setNewQuote({ ...newQuote, [ev.target.id]: ev.target.value });
+  };
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    setQuotes([...quotes, newQuote]);
+    setNewQuote({
+      quote: '',
+      character: '',
+    });
+  };
 
   return (
     <div className="App">
@@ -36,13 +56,27 @@ function App() {
           <form>
             <label>
               Frase
-              <input type="text"></input>
+              <input
+                type="text"
+                onChange={handleInput}
+                id="quote"
+                value={newQuote.quote}
+              ></input>
             </label>
             <label>
               Personaje
-              <input type="text"></input>
+              <input
+                type="text"
+                onChange={handleInput}
+                id="character"
+                value={newQuote.character}
+              ></input>
             </label>
-            <input type="submit" value="Añadir una nueva frase"></input>
+            <input
+              type="submit"
+              value="Añadir una nueva frase"
+              onClick={handleSubmit}
+            ></input>
           </form>
         </section>
       </main>
