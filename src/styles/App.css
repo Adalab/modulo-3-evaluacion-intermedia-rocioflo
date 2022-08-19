@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.filter-input-quote {
+  margin: 2rem;
+}
+
+.filter-input-character {
+  margin: 2rem;
+}
+
+.quote-list {
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
+
+.list-element {
+  padding: 1rem;
+  margin: 1rem;
+  list-style: none;
+  border: green 2px dotted;
+  border-radius: 1rem;
+}
+
+.add-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem;
+}

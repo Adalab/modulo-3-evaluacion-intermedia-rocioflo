@@ -35,7 +35,7 @@ function App() {
 
     .map((quote, index) => {
       return (
-        <li key={index}>
+        <li key={index} className="list-element">
           {quote.quote} - {quote.character}
         </li>
       );
@@ -62,39 +62,41 @@ function App() {
 
   return (
     <div className="App">
-      <header>
-        <h1>So no one told you life was gonna be this way 👏👏👏👏</h1>
-        <label>
-          Filtrar por frase
-          <input
-            type="text"
-            id="quoteFilter"
-            onChange={handleFilter}
-            value={filteredQuotes.quoteFilter}
-          ></input>
-        </label>
-        <label>
-          Filtrar por personaje
-          <select
-            id="characterFilter"
-            value={filteredQuotes.characterFilter}
-            onChange={handleFilter}
-          >
-            <option value="all">Todos</option>
-            <option value="Ross">Ross</option>
-            <option value="Monica">Monica</option>
-            <option value="Joey">Joey</option>
-            <option value="Phoebe">Phoebe</option>
-            <option value="Chandler">Chandler</option>
-            <option value="Rachel">Rachel</option>
-          </select>
-        </label>
+      <header className="header">
+        <h1>So no one told you React was gonna be this way 👏👏👏👏</h1>
+        <div className="filter-inputs">
+          <label htmlFor="quoteFilter" className="filter-input-quote">
+            Filtrar por frase
+            <input
+              type="text"
+              id="quoteFilter"
+              onChange={handleFilter}
+              value={filteredQuotes.quoteFilter}
+            ></input>
+          </label>
+          <label htmlFor="characterFilter" className="filter-input-character">
+            Filtrar por personaje
+            <select
+              id="characterFilter"
+              value={filteredQuotes.characterFilter}
+              onChange={handleFilter}
+            >
+              <option value="all">Todos</option>
+              <option value="Ross">Ross</option>
+              <option value="Monica">Monica</option>
+              <option value="Joey">Joey</option>
+              <option value="Phoebe">Phoebe</option>
+              <option value="Chandler">Chandler</option>
+              <option value="Rachel">Rachel</option>
+            </select>
+          </label>
+        </div>
       </header>
       <main>
-        <section>
+        <section className="quote-list">
           <ul>{renderQuotes}</ul>
         </section>
-        <section>
+        <section className="add-quote">
           <h3>Añadir una nueva frase</h3>
           <form>
             <label>
