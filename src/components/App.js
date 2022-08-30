@@ -1,10 +1,10 @@
 import '../styles/App.css';
-import { useState } from 'react';
-import quotesFriends from '../data/quotes.json';
+import { useState, useEffect } from 'react';
+import callToApi from '../services/api';
 
 function App() {
   //Variables de estado
-  const [quotes, setQuotes] = useState(quotesFriends);
+  const [quotes, setQuotes] = useState([]);
   const [newQuote, setNewQuote] = useState({
     quote: '',
     character: '',
@@ -13,6 +13,15 @@ function App() {
     quoteFilter: '',
     characterFilter: 'all',
   });
+
+  //Llamada a la Api
+
+  useEffect(() => {
+    callToApi().then((data) => {
+      console.log('api called');
+      setQuotes(data);
+    });
+  }, []);
 
   //Pintado y filtrado de frases
   const renderQuotes = quotes
@@ -51,13 +60,37 @@ function App() {
     setNewQuote({ ...newQuote, [ev.target.id]: ev.target.value });
   };
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    setQuotes([...quotes, newQuote]);
-    setNewQuote({
-      quote: '',
-      character: '',
-    });
+
+    if (newQuote.quote !== '' && newQuote.character !== '') {
+      if (
+        newQuote.character.toLowerCase() === 'monica' ||
+        newQuote.character.toLowerCase() === 'chandler' ||
+        newQuote.character.toLowerCase() === 'phoebe' ||
+        newQuote.character.toLowerCase() === 'ross' ||
+        newQuote.character.toLowerCase() === 'joey' ||
+        newQuote.character.toLowerCase() === 'rachel'
+      ) {
+        console.log(newQuote.character);
+        setQuotes([...quotes, newQuote]);
+        setNewQuote({
+          quote: '',
+          character: '',
+        });
+        setErrorMessage('');
+      } else {
+        setErrorMessage(
+          <p className="error-message">No inventes nombres, my friend.</p>
+        );
+      }
+    } else {
+      setErrorMessage(
+        <p className="error-message">Rellena ambos campos, my friend.</p>
+      );
+    }
   };
 
   return (
@@ -98,6 +131,7 @@ function App() {
         </section>
         <section className="add-quote">
           <h3>Añadir una nueva frase</h3>
+          {errorMessage}
           <form>
             <label>
               Frase

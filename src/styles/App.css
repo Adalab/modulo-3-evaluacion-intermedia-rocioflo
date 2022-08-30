@@ -34,3 +34,12 @@
   gap: 1rem;
   margin: 1rem;
 }
+
+.error-message {
+  font-size: 1.5rem;
+  border: 2px dotted red;
+  max-width: fit-content;
+  padding: 0.5rem;
+  height: fit-content;
+  margin: 0;
+}

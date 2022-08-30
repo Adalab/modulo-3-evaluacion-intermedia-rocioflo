@@ -5,11 +5,7 @@ const callToApi = () => {
   )
     .then((response) => response.json())
     .then((data) => {
-      const result = {
-        quote: data.quote,
-        character: data.character,
-      };
-      return result;
+      return data;
     });
 };
 
